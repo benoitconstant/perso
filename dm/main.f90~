@@ -1,0 +1,27 @@
+program main
+  use fonctions
+  implicit none
+
+    integer::t 
+    real*8,dimension(2,2)::A
+    real*8,dimension(2)::b
+    real*8,dimension(2)::x
+    t=2
+    
+    A(1,1)=1.
+    A(1,2)=2.
+    A(2,1)=3.
+    A(2,2)=4.
+    
+    b(1)=5.
+    b(2)=6.
+    
+    x=1.
+    
+    
+    call GPO(A,b,x,t)
+
+    print*,x
+
+end program
+    

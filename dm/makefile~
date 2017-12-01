@@ -1,0 +1,6 @@
+exe:module.o main.o
+	gfortran -o exe module.o main.o -g -fbounds-check
+module.o:module.f90
+	gfortran -c module.f90
+main.o:transport.f90 module.o
+	gfortran -c main.f90

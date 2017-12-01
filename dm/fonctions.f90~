@@ -1,0 +1,60 @@
+module fonctions
+
+contains
+
+  subroutine GPO(A,b,x,t)
+    integer,intent(in)::t !!taille des matrices
+    real*8,dimension(t,t),intent(in)::A
+    real*8,dimension(t),intent(in)::b
+    real*8,dimension(t),intent(inout)::x
+    real*8,dimension(t)::r,z
+    real*8:: alpha,eps,nume,denom
+    integer :: k, kmax
+    
+    call multi_mat(r,A,x,t)
+    r=b-r
+    
+    k=0
+    kmax=5
+    eps=0.1
+    nume=0.
+    denom=0.
+    alpha=0.
+    z=0.
+    do while (k<kmax)!! and abs(r)>eps) 
+       call multi_mat(z,A,r,t)
+       print*,' z = ',z
+       do i=1,t
+          nume=nume+r(i)**2
+          denom=denom+z(i)*r(i)
+       end do
+       alpha = nume/denom
+print*, 'alpha = ',alpha
+       x=x+alpha*r
+       r=r-alpha*z
+print*,' r = ',r
+       k=k+1
+    end do
+
+  end subroutine GPO
+
+
+
+
+subroutine multi_mat(FF,B,F,N)
+    integer,intent(in)::N
+    real*8,dimension(N),intent(out)::FF
+    real*8,dimension(N),intent(in)::F
+    real*8,dimension(N,N),intent(in)::B
+    integer :: i,j
+    real*8::res
+    
+    do i=1,N
+       res=0.d0
+       do j=1,N
+          FF(i)=res+B(j,i)*F(j)
+       end do
+    end do
+
+  end subroutine multi_mat
+end module fonctions
