@@ -144,8 +144,7 @@ results=results+timee;
        double error2 = ((approxSol-exactSol).array().abs()).sum();
        cout << "Erreur = " << error2<< " pour dt = " << dt/2. << endl;
        cout << "Ordre de la méthode = " << log2(error/error2) << endl;
-       //double res=
-       std::cout << "le temps mis par la méthode " <<  timee << " est "<<(double) temps/CLOCKS_PER_SEC<< '\n';
+       std::cout << "le temps mis par la méthode " << timee << " est "<< temps<< '\n';
     }
   return 0;
 }
