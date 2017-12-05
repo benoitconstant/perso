@@ -77,11 +77,11 @@ void RungeKuttaScheme3::Advance()
   VectorXd k1,k2,k3;
   _sys.BuildF( _t,_sol,_f);
   k1=_f;
-  _sys.BuildF( _t+_dt/2,_sol+_dt/2*k1,_f);
+  _sys.BuildF( _t+_dt/2.,_sol+_dt/2.*k1,_f);
   k2=_f;
   _sys.BuildF( _t+_dt, _sol+(-1)*_dt*k1+2*_dt*k2,_f);
   k3=_f;
-  _sol =_sol+ _dt/6*(k1+4*k2+k3);
+  _sol =_sol+ _dt/6.*(k1+4*k2+k3);
   _t += _dt;
 }
 
@@ -99,13 +99,13 @@ void RungeKuttaScheme4::Advance()
   VectorXd k1,k2,k3,k4;
   _sys.BuildF( _t,_sol,_f);
   k1=_f;
-  _sys.BuildF( _t+_dt/2,_sol+_dt/2*k1,_f);
+  _sys.BuildF( _t+_dt/2.,_sol+_dt/2.*k1,_f);
   k2=_f;
-  _sys.BuildF( _t+_dt/2, _sol+2*_dt*k2/2,_f);
+  _sys.BuildF( _t+_dt/2., _sol+2*_dt*k2/2.,_f);
   k3=_f;
   _sys.BuildF( _t+_dt, _sol+_dt*k3,_f);
   k4=_f;
-  _sol =_sol+ _dt/6*(k1+2*k2+2*k3+k4);
+  _sol =_sol+ _dt/6.*(k1+2.*k2+2.*k3+k4);
   _t += _dt;
 }
 
@@ -141,7 +141,7 @@ void AdBashforthScheme3::Advance()
       _sys.BuildF( _t+_dt, _sol+(-1)*_dt*k1+2*_dt*k2,_f);
       k3=_f;
       _sol_2=_sol_1;
-      _sol_1=_sol;
+      _sol_1=k1;
       _sol =_sol+ _dt/6*(k1+4*k2+k3);
       _t += _dt;
     }
@@ -154,7 +154,7 @@ void AdBashforthScheme3::Advance()
   k3=_sol_2;
 
   _sol_2=_sol_1;
-  _sol_1=_sol;
+  _sol_1=k1;
 
   _sol =_sol+ _dt/12*(23*k1-16*k2+5*k3);
   _t += _dt;

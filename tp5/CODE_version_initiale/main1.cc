@@ -8,7 +8,7 @@ using namespace Eigen;
 
 int main()
 {
-  double t0(0.), tfinal(50.0), dt(0.001); // temps initial, final, pas de temps
+  double t0(0.), tfinal(30.0), dt(0.01); // temps initial, final, pas de temps
   int nb_iterations = int(ceil(tfinal/dt)); // Définition du nombre d'itérations
   dt = tfinal / nb_iterations; // Recalcul de dt
   string results; // nom du fichier résultat
@@ -52,7 +52,7 @@ int main()
       sys= new LotkaVolterraOdeSystem(a,b,c,d);
       sol0.resize(2);
       //pour sol0(0)=d/c; sol0(1)=a/b; on obtient une solution constante :)
-      sol0(0)=1; sol0(1)=0.2;
+      sol0(0)=d/c; sol0(1)=a/b;
       results = "Lotka_ex";
     }
     break;
