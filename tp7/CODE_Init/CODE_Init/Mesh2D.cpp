@@ -116,8 +116,8 @@ void Mesh2D::BuildTrianglesCenter()
          y(j) = _vertices[pj](1);
 
        }
-    _tri_center[i](0)=(x(0)+x(1)+x(2))/3;
-    _tri_center[i](1)=(y(0)+y(1)+y(2))/3;
+    _tri_center[i][0]=(x(0)+x(1)+x(2))/3;
+    _tri_center[i][1]=(y(0)+y(1)+y(2))/3;
 
     _tri_area[i]= abs( (x(1)-x(0))*(y(2)-y(0))-(y(1)-y(0))*(x(2)-x(0)) ) / 2.;
 
@@ -139,7 +139,9 @@ void Mesh2D::BuildEdgesNormal()
   int ii=_edges.size();
   Eigen::Vector2d x;
   Eigen::Vector2d y;
-  int length;
+  x.resize(2); y.resize(2);
+
+
   for (int i=0; i<ii;i++)
   {
     for (int j=0; j<2; j++)
@@ -148,20 +150,24 @@ void Mesh2D::BuildEdgesNormal()
       x[j] = _vertices[pj](0);
       y[j] = _vertices[pj](1);
     }
-    _edg_center[i](0)=(x(0)+x(1))/2.;
-    _edg_center[i](1)=(y(0)+y(1))/2.;
+    _edg_center[i][0]=(x(0)+x(1))/2.;
+    _edg_center[i][1]=(y(0)+y(1))/2.;
 
-    length=sqrt(pow(x(1)-x(0),2)+pow(y(1)-y(0),2));
 
-    _edg_normal[i](0)= (y(0)-y(1))/length;
-    _edg_normal[i](1)= (x(1)-x(0))/length;
 
-    // int t1 = _edges[i].GetT1();
-    //
-    // Eigen::Vector2d diff = _edg_center.row(i) - _tri_center.row(t1);
-    //
-    // if (diff(0)*_edg_normal(i,0)+diff(1)*_edg_normal(i,1) < 0)
-    //   _edg_normal.row(i) *= -1;
+    _edg_normal[i][0]= (y(0)-y(1));
+    _edg_normal[i][1]= (x(1)-x(0));
+
+    int t1=_edges[i].GetT1();
+    VectorXd diff;
+    diff.resize(2);
+    diff[0] = _edg_center[i][0] - _tri_center[t1][0];
+    diff[1] = _edg_center[i][1] - _tri_center[t1][1];
+    if ( (_edg_normal[i][0]* diff[0] + _edg_normal[i][1]* diff[1]) < 0.) {
+      _edg_normal[i][0] = (-1.)* _edg_normal[i][0];
+      _edg_normal[i][1] = (-1.)* _edg_normal[i][1];
+    }
+    //std::cout << "les centres des arrêtes" << _edg_normal[i] << '\n';
   }
 }
 

@@ -48,7 +48,7 @@ double Function::ExactSolution(const double x, const double y, const double t) c
       exit(0);
     }
 
-  return InitialCondition(x-c*t,y-d*t);
+  return InitialCondition(x-c*t,y-d*t); // TODO
 }
 
 double Function::InitialCondition(const double x, const double y) const
@@ -57,15 +57,14 @@ double Function::InitialCondition(const double x, const double y) const
     {
     case Gaussian:
     return exp( -a*( pow((x-x0),2) + pow((y-y0),2) ) );
-    break;
+
     case Rectangular:
-    if (pow((x-x0),2)+pow((y-y0),2)<b)
+    if (pow((x-x0),2)+pow((y-y0),2)<pow(b,2))
       return 1.;
     else
       return 0.;
-      break;
-    default:
-    abort();
+
+
     }
 
   return 0.0;

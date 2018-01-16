@@ -10,7 +10,7 @@ using namespace Eigen;
 
 int main(int argc, char** argv)
 {
-
+  argc=3;
   if (argc < 2)
     {
       cout << "Please, enter the name of your data file." << endl;
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
   time_scheme->SaveSolution(0);
 
   // enlever la ligne suivante lorsque vous aurez construit BuildF correctement
-
+  
 
   // démarrage du chrono
   auto start = chrono::high_resolution_clock::now();
